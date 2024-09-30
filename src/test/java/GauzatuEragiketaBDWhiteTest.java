@@ -32,6 +32,8 @@ public class GauzatuEragiketaBDWhiteTest {
 				
 			} catch(Exception e) {
 				fail();
+			} finally {
+				sut.close();
 			}
 		}
 		
@@ -48,6 +50,8 @@ public class GauzatuEragiketaBDWhiteTest {
 				assertFalse(emaitza);
 			} catch(Exception e) {
 				fail();
+			} finally {
+			sut.close();
 			}
 		}
 
