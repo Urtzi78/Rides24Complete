@@ -673,9 +673,7 @@ public class DataAccess {
 
 			db.getTransaction().commit();
 		} catch (Exception e) {
-			if (db.getTransaction().isActive()) {
 				db.getTransaction().rollback();
-			}
 			e.printStackTrace();
 		}
 	}
