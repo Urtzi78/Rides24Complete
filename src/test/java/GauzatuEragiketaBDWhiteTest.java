@@ -35,5 +35,20 @@ public class GauzatuEragiketaBDWhiteTest {
 			}
 		}
 		
+		@Test
+		// Username ez dago datu basean. False itzuli behar du.
+		public void test2() {
+			try {
+				String username="Jon";
+				Double amount=5.9;
+			
+				sut.open();
+				boolean emaitza=sut.gauzatuEragiketa(username, amount, true);
+				
+				assertFalse(emaitza);
+			} catch(Exception e) {
+				fail();
+			}
+		}
 
 }
