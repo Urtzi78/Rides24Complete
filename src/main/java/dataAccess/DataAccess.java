@@ -167,8 +167,7 @@ public class DataAccess {
 			db.persist(c2);
 			db.persist(c3);
 
-			//Admin a1 = new Admin("Jon", "111");
-			//db.persist(a1);
+			
 
 			Discount dis = new Discount("Uda24", 0.2, true);
 			db.persist(dis);
