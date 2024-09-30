@@ -45,8 +45,27 @@ public class GauzatuEragiketaBDWhiteTest {
 				Double amount=5.9;
 			
 				sut.open();
-				boolean emaitza=sut.gauzatuEragiketa(username, amount, true);
+				boolean emaitza=sut.gauzatuEragiketa(username, amount, false);
 				
+				assertFalse(emaitza);
+			} catch(Exception e) {
+				fail();
+			} finally {
+			sut.close();
+			}
+		}
+		
+		@Test
+		public void test3() {
+			try {
+				String username="Urtzi";
+				Double amount=5.9;
+				boolean deposit=true;
+				
+				sut.open();
+				boolean emaitza=sut.gauzatuEragiketa(username, amount, deposit);
+				
+
 				assertFalse(emaitza);
 			} catch(Exception e) {
 				fail();
