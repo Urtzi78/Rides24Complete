@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -9,11 +10,11 @@ import domain.Driver;
 
 public class GauzatuEragiketaBDWhiteTest {
 	
-	//sut:system under test
-		 static DataAccess sut=new DataAccess();
+		//sut:system under test
+		static DataAccess sut=new DataAccess();
 		 
-		 //additional operations needed to execute the test 
-		 static TestDataAccess testDA=new TestDataAccess();
+		//additional operations needed to execute the test 
+		static TestDataAccess testDA=new TestDataAccess();
 
 		@SuppressWarnings("unused")
 		private Driver driver; 
@@ -66,7 +67,45 @@ public class GauzatuEragiketaBDWhiteTest {
 				boolean emaitza=sut.gauzatuEragiketa(username, amount, deposit);
 				
 
-				assertFalse(emaitza);
+				assertTrue(emaitza);
+			} catch(Exception e) {
+				fail();
+			} finally {
+			sut.close();
+			}
+		}
+		
+		@Test
+		public void test4() {
+			try {
+				String username="Urtzi";
+				Double amount=20.5;
+				boolean deposit=false;
+				
+				sut.open();
+				boolean emaitza=sut.gauzatuEragiketa(username, amount, deposit);
+				
+
+				assertTrue(emaitza);
+			} catch(Exception e) {
+				fail();
+			} finally {
+			sut.close();
+			}
+		}
+		
+		@Test
+		public void test5() {
+			try {
+				String username="Urtzi";
+				Double amount=5.9;
+				boolean deposit=true;
+				
+				sut.open();
+				boolean emaitza=sut.gauzatuEragiketa(username, amount, deposit);
+				
+
+				assertTrue(emaitza);
 			} catch(Exception e) {
 				fail();
 			} finally {
