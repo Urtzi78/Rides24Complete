@@ -76,6 +76,7 @@ public class GauzatuEragiketaBDWhiteTest {
 		}
 		
 		@Test
+		//
 		public void test4() {
 			try {
 				String username="Urtzi";
@@ -99,7 +100,7 @@ public class GauzatuEragiketaBDWhiteTest {
 			try {
 				String username="Urtzi";
 				Double amount=5.9;
-				boolean deposit=true;
+				boolean deposit=false;
 				
 				sut.open();
 				boolean emaitza=sut.gauzatuEragiketa(username, amount, deposit);
