@@ -37,7 +37,7 @@ public class GauzatuEragiketaBDWhiteTest {
 				sut.close();
 			}
 		}
-		
+		//dh
 		@Test
 		// Username ez dago datu basean. False itzuli behar du.
 		public void test2() {
