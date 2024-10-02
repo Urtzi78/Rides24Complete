@@ -69,7 +69,34 @@ static DataAccess sut;
 		}
 	}
 	
+	@Test
+	//user datu basean dago, deposit true
 	public void test3() {
+		try{
+			String username="Dani";
+			String password="123";
+			Double money=5.9;
+			Double amount=20.0;
+			User user=new User(username, password, null);
+			user.setMoney(money);
+			
+			Mockito.when(db.find(User.class, username)).thenReturn(user);
+			
+			sut.open();
+			boolean emaitza=sut.gauzatuEragiketa(username, amount, true);
+			
+			assertTrue(emaitza);
+			
+		} catch(Exception e) {
+			fail();
+		} finally {
+			sut.close();
+		}
+	}
+	
+	@Test
+	//user datu basean dago, deposit false, amount>currentMoney
+	public void test4() {
 		try{
 			String username="Urtzi";
 			String password="123";
@@ -78,10 +105,35 @@ static DataAccess sut;
 			User user=new User(username, password, null);
 			user.setMoney(money);
 			
-			Mockito.when(db.find(User.class, null)).thenReturn(user);
+			Mockito.when(db.find(User.class, username)).thenReturn(user);
 			
 			sut.open();
-			boolean emaitza=sut.gauzatuEragiketa(username, amount, true);
+			boolean emaitza=sut.gauzatuEragiketa(username, amount, false);
+			
+			assertTrue(emaitza);
+			
+		} catch(Exception e) {
+			fail();
+		} finally {
+			sut.close();
+		}
+	}
+	
+	@Test
+	//user datu basean dago, deposit false, amount<=currentMoney
+	public void test5() {
+		try{
+			String username="Urtzi";
+			String password="123";
+			Double money=25.0;
+			Double amount=20.0;
+			User user=new User(username, password, null);
+			user.setMoney(money);
+			
+			Mockito.when(db.find(User.class, username)).thenReturn(user);
+			
+			sut.open();
+			boolean emaitza=sut.gauzatuEragiketa(username, amount, false);
 			
 			assertTrue(emaitza);
 			

@@ -57,6 +57,7 @@ public class GauzatuEragiketaBDWhiteTest {
 		}
 		
 		@Test
+		//user datu basean dago, deposit true
 		public void test3() {
 			try {
 				String username="Urtzi";
@@ -76,7 +77,7 @@ public class GauzatuEragiketaBDWhiteTest {
 		}
 		
 		@Test
-		//
+		//user datu basean dago, deposit false, amount>currentMoney
 		public void test4() {
 			try {
 				String username="Urtzi";
@@ -96,6 +97,7 @@ public class GauzatuEragiketaBDWhiteTest {
 		}
 		
 		@Test
+		//user datu basean dago, deposit false, amount<=currentMoney
 		public void test5() {
 			try {
 				String username="Urtzi";
