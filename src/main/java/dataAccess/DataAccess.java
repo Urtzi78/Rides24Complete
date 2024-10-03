@@ -249,7 +249,9 @@ public class DataAccess {
 
 			return ride;
 		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
+			if (db.getTransaction().isActive())
+				db.getTransaction().rollback();
+			e.printStackTrace();
 			return null;
 		}
 

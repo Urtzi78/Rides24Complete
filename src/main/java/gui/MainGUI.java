@@ -41,7 +41,7 @@ public class MainGUI extends JFrame {
 	}
 	protected JLabel jLabelSelectOption;
 	private JRadioButton rdbtnNewRadioButton;
-	private JRadioButton rdbtnNewRadioButton_1;
+	private JRadioButton rdbtnEuskara;
 	private JRadioButton rdbtnNewRadioButton_2;
 	private JPanel panel;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
@@ -68,14 +68,14 @@ public class MainGUI extends JFrame {
 		});
 		buttonGroup.add(rdbtnNewRadioButton);
 		
-		rdbtnNewRadioButton_1 = new JRadioButton("Euskara");
-		rdbtnNewRadioButton_1.addActionListener(new ActionListener() {
+		rdbtnEuskara = new JRadioButton("Euskara");
+		rdbtnEuskara.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Locale.setDefault(new Locale("eus"));
 				System.out.println("Locale: "+Locale.getDefault());
 				paintAgain();				}
 		});
-		buttonGroup.add(rdbtnNewRadioButton_1);
+		buttonGroup.add(rdbtnEuskara);
 		
 		rdbtnNewRadioButton_2 = new JRadioButton("Castellano");
 		rdbtnNewRadioButton_2.addActionListener(new ActionListener() {
@@ -88,7 +88,7 @@ public class MainGUI extends JFrame {
 		buttonGroup.add(rdbtnNewRadioButton_2);
 	
 		panel = new JPanel();
-		panel.add(rdbtnNewRadioButton_1);
+		panel.add(rdbtnEuskara);
 		panel.add(rdbtnNewRadioButton_2);
 		panel.add(rdbtnNewRadioButton);
 		
