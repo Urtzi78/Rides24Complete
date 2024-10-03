@@ -52,9 +52,8 @@ public class Admin2 implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Admin2 other = (Admin2) obj;
-		if (username != other.username)
-			return false;
-		return true;
+		
+		return (username == other.username);
 	}
 
 	public String getMota() {

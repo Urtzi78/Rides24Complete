@@ -1,5 +1,6 @@
 package businessLogic;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import java.util.List;
@@ -26,7 +27,7 @@ import javax.jws.WebService;
  * Interface that specifies the business logic.
  */
 @WebService
-public interface BLFacade {
+public interface BLFacade extends Serializable{
 
 	/**
 	 * This method returns all the cities where rides depart
