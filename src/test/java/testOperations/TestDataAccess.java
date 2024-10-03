@@ -15,6 +15,7 @@ import domain.Booking;
 import domain.Driver;
 import domain.Ride;
 import domain.Traveler;
+import domain.User;
 
 public class TestDataAccess {
 	protected EntityManager db;
@@ -248,6 +249,21 @@ public class TestDataAccess {
 			db.remove(managedRide);
 			db.getTransaction().commit();
 		}
+	}
+
+	public void createUser(String username, String password, Double money) {
+		User user=new User(username, password, null);
+		user.setMoney(money);
+		db.getTransaction().begin();
+		db.persist(user);
+		db.getTransaction().commit();
+	}
+
+	public void removeUser(String username) {
+		db.getTransaction().begin();
+		User u=db.find(User.class, username);
+		db.remove(u);
+		db.getTransaction().commit();
 	}
 	
 

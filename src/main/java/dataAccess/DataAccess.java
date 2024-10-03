@@ -335,9 +335,13 @@ public class DataAccess {
 	}
 
 	public User getUser(String erab) {
-		TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+		/*TypedQuery<User> query = db.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
 		query.setParameter("username", erab);
-		return query.getSingleResult();
+		return query.getSingleResult();*/
+		//if(erab!=null) {
+			return db.find(User.class, erab);
+		//}
+		//else return null;
 	}
 
 	public double getActualMoney(String erab) {
@@ -470,10 +474,12 @@ public class DataAccess {
 				if (deposit) {
 					user.setMoney(currentMoney + amount);
 				} else {
-					if ((currentMoney - amount) < 0)
+
+					if ((currentMoney - amount) < 0) {
 						user.setMoney(0);
-					else
+					}else {
 						user.setMoney(currentMoney - amount);
+					}
 				}
 				db.merge(user);
 				db.getTransaction().commit();
@@ -482,7 +488,7 @@ public class DataAccess {
 			db.getTransaction().commit();
 			return false;
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			db.getTransaction().rollback();
 			return false;
 		}

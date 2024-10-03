@@ -50,6 +50,27 @@ static DataAccess sut;
     }
 	User user;
 	@Test
+	public void test1() {
+		try{
+			String username=null;
+			Double amount=5.9;
+		    
+			Mockito.when(db.find(User.class, username)).thenThrow(new Exception());
+			
+			sut.open();
+			boolean emaitza=sut.gauzatuEragiketa(username, amount, true);
+			
+			assertFalse(emaitza);
+			
+		} catch(Exception e) {
+			System.out.print("exception atera da");
+			fail();
+		} finally {
+			sut.close();
+		}
+	}
+	
+	@Test
 	//sut.GauzatuEragiketa. user ez dago datu basean
 	public void test2() {
 		try{
@@ -80,10 +101,8 @@ static DataAccess sut;
 			Double amount=20.0;
 			user=new User(username, password, null);
 			user.setMoney(money);
-			TypedQuery<User> query=new TypedQuery<User>();
-			query.setParameter(0, user);
-			//Mockito.when(db.find(User.class, user.getUsername())).thenReturn(user);
-			Mockito.when(db.createQuery("SELECT u FROM User u WHERE u.username = :"+username, User.class)).thenReturn(query);
+			Mockito.when(db.find(User.class, user.getUsername())).thenReturn(user);
+			//Mockito.when(db.createQuery("SELECT u FROM User u WHERE u.username = :"+username, User.class)).thenReturn(query);
 			sut.open();
 			boolean emaitza=sut.gauzatuEragiketa(username, amount, true);
 			
