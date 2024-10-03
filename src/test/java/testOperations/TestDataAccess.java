@@ -1,7 +1,9 @@
 package testOperations;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -65,7 +67,7 @@ public class TestDataAccess {
 		} else
 			return false;
 	}
-
+	
 	public Driver createDriver(String name, String pass) {
 		System.out.println(">> TestDataAccess: addDriver");
 		Driver driver = null;
@@ -106,6 +108,59 @@ public class TestDataAccess {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public List<Ride> getDriversRides(Driver d){
+		if(d!=null) {
+			return d.getCreatedRides();
+		}
+		else {
+			return null;
+		}
+	}
+	public Booking bookRide(String username, Ride ride, int seats, double desk) {
+		try {
+			db.getTransaction().begin();
+
+			Traveler traveler = getTraveler(username);
+			if (traveler == null) {
+				return null;
+			}
+
+			if (ride.getnPlaces() < seats) {
+				return null;
+			}
+
+			double ridePriceDesk = (ride.getPrice() - desk) * seats;
+			double availableBalance = traveler.getMoney();
+			if (availableBalance < ridePriceDesk) {
+				return null;
+			}
+
+			Booking booking = new Booking(ride, traveler, seats);
+			booking.setTraveler(traveler);
+			booking.setDeskontua(desk);
+			db.persist(booking);
+
+			ride.setnPlaces(ride.getnPlaces() - seats);
+			traveler.addBookedRide(booking);
+			traveler.setMoney(availableBalance - ridePriceDesk);
+			traveler.setIzoztatutakoDirua(traveler.getIzoztatutakoDirua() + ridePriceDesk);
+			List<Booking> b= new ArrayList<Booking>();
+			b.add(booking);
+			ride.setBookings(b);
+			db.merge(ride);
+			db.merge(traveler);
+			db.getTransaction().commit();
+			return booking;
+		} catch (Exception e) {
+			e.printStackTrace();
+			db.getTransaction().rollback();
+			return null;
+		}
+	}
+	public void setBookStatus(Booking b, String s) {
+		b.setStatus(s);
 	}
 
 	public boolean existRide(String name, String from, String to, Date date) {
@@ -194,5 +249,6 @@ public class TestDataAccess {
 			db.getTransaction().commit();
 		}
 	}
+	
 
 }

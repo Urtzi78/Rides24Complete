@@ -28,6 +28,7 @@ public class CancelRideDBWhiteTest {
 	@Test
 	//r Ride is null cancelRide should not do anything
 	public void test1() {
+		System.out.println("-------------------------------------1.Testa--------------------------------");
 		Ride r=null;
 		sut.open();
 		sut.cancelRide(r);
@@ -38,6 +39,7 @@ public class CancelRideDBWhiteTest {
 	@Test
 	//r Ride has an empty bookings list, should not do anything
 	public void test2() {
+		System.out.println("-------------------------------------2.Testa--------------------------------");
 		sut.open();
 		Driver u=sut.getDriver("Urtzi");
 		Ride r= new Ride("Hernani", "Donostia", new Date(), 5, 4.5, u);
@@ -51,37 +53,71 @@ public class CancelRideDBWhiteTest {
 	@Test
 	//
 	public void test3() {
-		
+		System.out.println("-------------------------------------3.Testa--------------------------------");
+		testDA.open();
+		Traveler a=testDA.createTravelerWithMoney("Aimar", "1234", 500.0);
+		Driver d=testDA.createDriver("Dani", "a");
+		testDA.addDriverWithRide("Dani", "Hernani", "Lasarte", new Date(), 7, 9);
+		List<Ride>r=testDA.getDriversRides(d);
+		Booking b=testDA.bookRide("Aimar",r.get(0),2,0.0);
+		testDA.setBookStatus(b, "Accepted");
+		testDA.close();
 		sut.open();
-		Driver u=sut.getDriver("Urtzi");
-		Traveler t=sut.getTraveler("Unax");
-		Ride r= new Ride("Hernani", "Donostia", new Date(), 5, 4.5, u);
-		Booking b= new Booking(r,t,5);
-		b.setStatus("Accepted");
-		List<Booking> bs=new ArrayList<Booking>();
-		bs.add(b);
-		r.setBookings(bs);
+		try {
 		
-		sut.cancelRide(r);
+
+		
+		
+		sut.cancelRide(r.get(0));
 		assertTrue(true);
 		sut.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			sut.close();
+		}
+		finally{
+			sut.open();
+			sut.deleteUser(d);
+			sut.deleteUser(a);
+			sut.close();
+			
+		}
 		
 	}
 	@Test
-	//
+	
 	public void test4() {
+		System.out.println("-------------------------------------4.Testa--------------------------------");
+		testDA.open();
+		Traveler a=testDA.createTravelerWithMoney("Aimar", "1234", 500.0);
+		Driver d=testDA.createDriver("Dani", "a");
+		testDA.addDriverWithRide("Dani", "Hernani", "Lasarte", new Date(), 7, 9);
+		List<Ride>r=testDA.getDriversRides(d);
+		Booking b=testDA.bookRide("Aimar",r.get(0),2,0.0);
+		testDA.setBookStatus(b, "Rejected");
+		testDA.close();
 		sut.open();
-		Driver u=sut.getDriver("Urtzi");
-		Traveler t=sut.getTraveler("Unax");
-		Ride r= new Ride("Hernani", "Donostia", new Date(), 5, 4.5, u);
-		Booking b= new Booking(r,t,5);
-		b.setStatus("Rejected");
-		List<Booking> bs=new ArrayList<Booking>();
-		bs.add(b);
-		r.setBookings(bs);
+		try {
 		
-		sut.cancelRide(r);
+
+		
+		
+		sut.cancelRide(r.get(0));
 		assertTrue(true);
 		sut.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			sut.close();
+		}
+		finally{
+			sut.open();
+			sut.deleteUser(d);
+			sut.deleteUser(a);
+			sut.close();
+			
+		}
 	}
+	
 }

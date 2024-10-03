@@ -670,7 +670,9 @@ public class DataAccess {
 			db.merge(ride);
 			db.getTransaction().commit();
 		} catch (Exception e) {
-			db.getTransaction().rollback();
+		
+				db.getTransaction().rollback();
+			
 			e.printStackTrace();
 		}
 	}
@@ -691,7 +693,7 @@ public class DataAccess {
 					activeRides.add(ride);
 				}
 			}
-
+			
 			db.getTransaction().commit();
 			return activeRides;
 		} catch (Exception e) {
