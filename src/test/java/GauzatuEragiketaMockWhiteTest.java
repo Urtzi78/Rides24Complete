@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 import org.junit.After;
 import org.junit.Before;
@@ -47,7 +48,7 @@ static DataAccess sut;
     public  void tearDown() {
 		persistenceMock.close();
     }
-	
+	User user;
 	@Test
 	//sut.GauzatuEragiketa. user ez dago datu basean
 	public void test2() {
@@ -77,11 +78,12 @@ static DataAccess sut;
 			String password="123";
 			Double money=5.9;
 			Double amount=20.0;
-			User user=new User(username, password, null);
+			user=new User(username, password, null);
 			user.setMoney(money);
-			
-			Mockito.when(db.find(User.class, username)).thenReturn(user);
-			
+			TypedQuery<User> query=new TypedQuery<User>();
+			query.setParameter(0, user);
+			//Mockito.when(db.find(User.class, user.getUsername())).thenReturn(user);
+			Mockito.when(db.createQuery("SELECT u FROM User u WHERE u.username = :"+username, User.class)).thenReturn(query);
 			sut.open();
 			boolean emaitza=sut.gauzatuEragiketa(username, amount, true);
 			

@@ -13,7 +13,7 @@ import domain.Driver;
 import domain.*;
 import testOperations.TestDataAccess;
 
-public class CancelRideDBWhiteTest {
+public class CancelRideBDWhiteTest {
 
 	 //sut:system under test
 	 static DataAccess sut=new DataAccess();
