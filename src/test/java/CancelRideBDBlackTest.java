@@ -64,7 +64,7 @@ public class CancelRideBDBlackTest {
 		
 	}
 	@Test
-	//Ondo egin behar du erreserbak ez ditu
+	//Exception printeatu behar du, ez dituelako erreserbak
 	public void test2() {
 		System.out.println("-------------------------------------2.Testa--------------------------------");
 		testDA.open();
@@ -117,6 +117,7 @@ public class CancelRideBDBlackTest {
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			fail();
 			sut.close();
 		}
 		

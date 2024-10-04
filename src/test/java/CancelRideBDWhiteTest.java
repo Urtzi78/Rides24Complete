@@ -51,7 +51,7 @@ public class CancelRideBDWhiteTest {
 		
 	}
 	@Test
-	//
+	//r Ride has an non empty list, should work correctly
 	public void test3() {
 		System.out.println("-------------------------------------3.Testa--------------------------------");
 		testDA.open();
