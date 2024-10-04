@@ -1,6 +1,8 @@
 package configuration;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,6 +16,10 @@ import org.w3c.dom.NodeList;
  * It provides the configuration data from the "resources/config.xml" XML file
  */
 public class ConfigXML {
+	
+	private static ConfigXML instance;
+	
+	Logger logger = Logger.getLogger(ConfigXML.class.getName());
 	
 	private String configFile = "src/main/resources/config.xml";
 		
@@ -125,11 +131,22 @@ public class ConfigXML {
 			  System.out.println("\t dataBaseInitialized="+isDatabaseInitialized); 
 					  
 		  } catch (Exception e) {
-			System.out.println("Error in ConfigXML.java: problems with "+ configFile);
-		    e.printStackTrace();
+			logger.log(Level.INFO, "Error in ConfigXML.java: problems with ", configFile);
+			e.printStackTrace();
 		  }		
 		
 	}
+	
+	 public static ConfigXML getInstance() {
+	        if (instance == null) {
+	            synchronized (ConfigXML.class) {
+	                if (instance == null) {
+	                    instance = new ConfigXML();
+	                }
+	            }
+	        }
+	        return instance;
+	 }
 
 	private static String getTagValue(String sTag, Element eElement)
 	 {
@@ -140,9 +157,9 @@ public class ConfigXML {
 
 	 }
 	
-	public static ConfigXML getInstance() {
+	/*public static ConfigXML getInstance() {
 		return theInstance;
-	}
+	}*/
 
 	public String getBusinessLogicNode() {
 		return businessLogicNode;
