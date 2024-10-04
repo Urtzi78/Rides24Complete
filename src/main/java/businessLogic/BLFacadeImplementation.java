@@ -27,7 +27,7 @@ import exceptions.RideAlreadyExistException;
  */
 @WebService(endpointInterface = "businessLogic.BLFacade")
 public class BLFacadeImplementation implements BLFacade {
-	DataAccess dbManager;
+	transient DataAccess dbManager;
 
 	public BLFacadeImplementation() {
 		System.out.println("Creating BLFacadeImplementation instance");

@@ -2,8 +2,11 @@ package domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,14 +17,14 @@ import javax.xml.bind.annotation.XmlIDREF;
 @Entity
 @DiscriminatorValue("DRIVER")
 public class Driver extends User implements Serializable {
-
+	private static final Logger LOGGER = Logger.getLogger(Driver.class.getName());
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	@XmlIDREF
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Car> cars = new Vector<Car>();;
+	private List<Car> cars = new LinkedList<>();
 	@XmlIDREF
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Ride> createdRides = new Vector<Ride>();
@@ -30,6 +33,7 @@ public class Driver extends User implements Serializable {
 		super(username, passwd, "Driver");
 	}
 
+	@Override
 	public String toString() {
 		return (super.toString());
 	}
@@ -89,25 +93,26 @@ public class Driver extends User implements Serializable {
 	}
 
 	public Ride removeRide(String from, String to, Date date) {
-		Ride r=null;
-		int pos=0;
-		int index=0;
-		boolean encontrado=false;
+		Ride r = null;
+		int pos = 0;
+		int index = 0;
+		boolean encontrado = false;
 		for (Ride ride : createdRides) {
-			//if (ride.getFrom().equals(from) && ride.getTo().equals(to) && ride.getDate().equals(date)) {
-			if ((ride.getFrom()==from) && (ride.getTo()==to) && (ride.getDate().equals(date))) {
+			// if (ride.getFrom().equals(from) && ride.getTo().equals(to) &&
+			// ride.getDate().equals(date)) {
+			if ((ride.getFrom() == from) && (ride.getTo() == to) && (ride.getDate().equals(date))) {
 
-				encontrado=true;
-				pos=index;
+				encontrado = true;
+				pos = index;
 			}
 			index++;
 		}
 		if (encontrado) {
-				 System.out.println("posicion "+ pos);
-				 r=createdRides.get(pos);
-				 System.out.println("ride recuperado "+r);
-				 createdRides.remove(pos);
-			}
+			LOGGER.log(Level.INFO, "posicion {0}", pos);
+			r = createdRides.get(pos);
+			System.out.println("ride recuperado " + r);
+			createdRides.remove(pos);
+		}
 		return r;
 	}
 

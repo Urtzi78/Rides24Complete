@@ -16,6 +16,8 @@ import java.text.SimpleDateFormat;
 
 public class ErreserbaOnartuGUI extends JFrame {
 
+	private static final String EZDEFINITUA = "NotDefined";
+	
 	private static final long serialVersionUID = 1L;
 	private static BLFacade appFacadeInterface;
 	private JTable taula;
@@ -83,7 +85,7 @@ public class ErreserbaOnartuGUI extends JFrame {
 					status = ResourceBundle.getBundle("Etiquetas").getString("Valued");
 					break;
 				default:
-					status = ResourceBundle.getBundle("Etiquetas").getString("NotDefined");
+					status = ResourceBundle.getBundle("Etiquetas").getString(EZDEFINITUA);
 					break;
 				}
 
@@ -110,7 +112,7 @@ public class ErreserbaOnartuGUI extends JFrame {
 				int pos = taula.getSelectedRow();
 				if (pos != -1) {
 					Booking booking = TravelsList.get(pos);
-					if (!booking.getStatus().equals("NotDefined")) {
+					if (!booking.getStatus().equals(EZDEFINITUA)) {
 						lblErrorea.setForeground(Color.RED);
 						lblErrorea.setText(
 								ResourceBundle.getBundle("Etiquetas").getString("ErreserbakOnartuGUI.SelectOther"));
@@ -141,7 +143,7 @@ public class ErreserbaOnartuGUI extends JFrame {
 				if (pos != -1) {
 					Booking booking = TravelsList.get(pos);
 
-					if (!booking.getStatus().equals("NotDefined")) {
+					if (!booking.getStatus().equals(EZDEFINITUA)) {
 						lblErrorea.setForeground(Color.RED);
 						lblErrorea.setText(
 								ResourceBundle.getBundle("Etiquetas").getString("ErreserbakOnartuGUI.SelectOther"));
