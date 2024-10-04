@@ -214,23 +214,23 @@ public class BookRideBDWhiteTest {
 			driver = testDA.getDriver(driverUsername);
 			testDA.close();
 
-			// Create a ride
+			// ride sortu
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Date rideDate = sdf.parse("30/11/2024");
 
 			sut.open();
 			ride = sut.createRide("Donostia", "Bilbo", rideDate, 5, 50, driverUsername);
 
-			// Book the ride
+			// Bidaia erreserbatu
 			int seats = 2;
 			double desk = 5.0;
 			result = sut.bookRide(username, ride, seats, desk);
 			sut.close();
 
-			// Verify the results
+			// Emaitza aztertu
 			assertTrue(result);
 
-			// Additional verifications
+			// Ziurtapen gehiago
 			testDA.open();
 			Ride updatedRide = testDA.getRide(ride.getRideNumber());
 			assertEquals(3, updatedRide.getnPlaces()); // 5 eserleku original - 2 erreserbatutako eserleku
