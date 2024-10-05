@@ -1,65 +1,56 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Test;
 
-import configuration.UtilDate;
 import dataAccess.DataAccess;
 import domain.Ride;
-import exceptions.RideAlreadyExistException;
-import exceptions.RideMustBeLaterThanTodayException;
 import testOperations.TestDataAccess;
 import domain.Driver;
 
 public class BookRideBDWhiteTest {
 
-	// sut:system under test
 	static DataAccess sut = new DataAccess();
 
-	// additional operations needed to execute the test
 	static TestDataAccess testDA = new TestDataAccess();
 
 	@Test
 	// sut.bookRide: Ride null da. Testak false itzuli behar du.
 	public void test1() {
 		String username = "TestTraveler";
-        Ride ride = null;
-        int seats = 3;
-        double desk = 0;
-        boolean travelerCreated = false;
+		Ride ride = null;
+		int seats = 3;
+		double desk = 0;
+		boolean travelerCreated = false;
 
-        try {
-            // traveler sortu
-            testDA.open();
-            testDA.createTravelerWithMoney(username, "password", 1000.0);
-            travelerCreated = true;
-            testDA.close();
+		try {
+			// traveler sortu
+			testDA.open();
+			testDA.createTravelerWithMoney(username, "password", 1000.0);
+			travelerCreated = true;
+			testDA.close();
 
-            // Ride null bat erreserbatzen saiatu
-            sut.open();
-            boolean emaitza = sut.bookRide(username, ride, seats, desk);
-            sut.close();
+			// Ride null bat erreserbatzen saiatu
+			sut.open();
+			boolean emaitza = sut.bookRide(username, ride, seats, desk);
+			sut.close();
 
-            assertFalse(emaitza);
-        } catch (Exception e) {
-            fail();
-        } finally {
-            // DB garbitu
-            if (travelerCreated) {
-                testDA.open();
-                testDA.removeTraveler(username);
-                testDA.close();
-            }
-        }
+			assertFalse(emaitza);
+		} catch (Exception e) {
+			fail();
+		} finally {
+			// DB garbitu
+			if (travelerCreated) {
+				testDA.open();
+				testDA.removeTraveler(username);
+				testDA.close();
+			}
+		}
 	}
 
 	@Test
@@ -191,7 +182,6 @@ public class BookRideBDWhiteTest {
 	// nahikoa diru du erreserba ordaintzeko. Testak true itzuli behar du.
 
 	public void test5() {
-		boolean result = false;
 		String username = "TestTraveler";
 		Driver driver = null;
 		Ride ride = null;
@@ -219,12 +209,12 @@ public class BookRideBDWhiteTest {
 			Date rideDate = sdf.parse("30/11/2024");
 
 			sut.open();
-			ride = sut.createRide("Donostia", "Bilbo", rideDate, 5, 50, driverUsername);
+			ride = sut.createRide("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername());
 
 			// Bidaia erreserbatu
 			int seats = 2;
 			double desk = 5.0;
-			result = sut.bookRide(username, ride, seats, desk);
+			boolean result = sut.bookRide(username, ride, seats, desk);
 			sut.close();
 
 			// Emaitza aztertu

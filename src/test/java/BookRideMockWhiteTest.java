@@ -1,12 +1,7 @@
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.persistence.EntityManager;
@@ -27,8 +22,6 @@ import dataAccess.DataAccess;
 import domain.Driver;
 import domain.Ride;
 import domain.Traveler;
-import exceptions.RideAlreadyExistException;
-import exceptions.RideMustBeLaterThanTodayException;
 
 public class BookRideMockWhiteTest {
 
@@ -42,6 +35,11 @@ public class BookRideMockWhiteTest {
 	protected EntityManager db;
 	@Mock
 	protected EntityTransaction et;
+
+	@Mock
+	protected TypedQuery<Traveler> typedQueryTraveler;
+	@Mock
+	protected TypedQuery<Ride> typedQueryRide;
 
 	@Before
 	public void init() {
@@ -75,23 +73,19 @@ public class BookRideMockWhiteTest {
 		assertFalse(result);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	// sut.bookRide: Traveler ez da existitzen DBan. Testak false itzuli behar du.
 	public void test2() {
-		String nonExistentUsername = "NonExistentTraveler";
-		Ride ride = Mockito.mock(Ride.class);
-		int seats = 2;
-		double desk = 0;
+		String username = "NonExistentUser";
+		Ride ride = new Ride("Donostia", "Bilbo", new Date(), 5, 50, new Driver("TestDriver", "password"));
 
-		TypedQuery<Traveler> query = Mockito.mock(TypedQuery.class);
 		Mockito.when(db.createQuery("SELECT t FROM Traveler t WHERE t.username = :username", Traveler.class))
-				.thenReturn(query);
-		Mockito.when(query.setParameter("username", nonExistentUsername)).thenReturn(query);
-		Mockito.when(query.getSingleResult()).thenThrow(new javax.persistence.NoResultException());
+				.thenReturn(typedQueryTraveler);
+		Mockito.when(typedQueryTraveler.setParameter("username", username)).thenReturn(typedQueryTraveler);
+		Mockito.when(typedQueryTraveler.getResultList()).thenReturn(Collections.emptyList());
 
 		sut.open();
-		boolean result = sut.bookRide(nonExistentUsername, ride, seats, desk);
+		boolean result = sut.bookRide(username, ride, 2, 0);
 		sut.close();
 
 		assertFalse(result);
@@ -162,6 +156,5 @@ public class BookRideMockWhiteTest {
 		assertTrue(result);
 		Mockito.verify(ride).setnPlaces(3);
 		Mockito.verify(traveler).setMoney(910.0);
-
 	}
 }
