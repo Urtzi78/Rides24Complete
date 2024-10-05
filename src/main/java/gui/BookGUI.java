@@ -449,7 +449,7 @@ public class BookGUI extends JFrame {
 			// English and Spanish
 			// Component o=(Component)
 			// jCalendar.getDayChooser().getDayPanel().getComponent(i+offset);;
-			Component o = (Component) jCalendar.getDayChooser().getDayPanel()
+			Component o =  jCalendar.getDayChooser().getDayPanel()
 					.getComponent(calendar.get(Calendar.DAY_OF_MONTH) + offset);
 			o.setBackground(color);
 		}

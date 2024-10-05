@@ -1,5 +1,6 @@
 package gui;
 
+import java.util.logging.Logger;
 import java.net.URL;
 import java.util.Locale;
 
@@ -13,12 +14,14 @@ import businessLogic.BLFacade;
 import businessLogic.BLFacadeImplementation;
 
 public class ApplicationLauncher {
+	
 
 	public static void main(String[] args) {
+		
 
 		ConfigXML c = ConfigXML.getInstance();
-
-		System.out.println(c.getLocale());
+		Logger logger=Logger.getLogger(ApplicationLauncher.class.getName());
+		logger.info(c.getLocale());
 
 		Locale.setDefault(new Locale(c.getLocale()));
 
@@ -62,7 +65,7 @@ public class ApplicationLauncher {
 
 			System.out.println("Error in ApplicationLauncher: " + e.toString());
 		}
-		// a.pack();
+		
 
 	}
 
