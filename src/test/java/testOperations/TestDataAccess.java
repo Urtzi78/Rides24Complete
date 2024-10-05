@@ -265,6 +265,13 @@ public class TestDataAccess {
 		db.remove(u);
 		db.getTransaction().commit();
 	}
+
+	public void createUserWithoutMoney(String username, String password) {
+		User user=new User(username, password, null);
+		db.getTransaction().begin();
+		db.persist(user);
+		db.getTransaction().commit();
+	}
 	
 
 }
