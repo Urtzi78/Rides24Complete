@@ -650,7 +650,7 @@ public class DataAccess {
 	public void cancelRide(Ride ride) {
 		try {
 			db.getTransaction().begin();
-
+			if(ride.getBookings()!=null)
 			for (Booking booking : ride.getBookings()) {
 				if (booking.getStatus().equals("Accepted") || booking.getStatus().equals("NotDefined")) {
 					double price = booking.prezioaKalkulatu();
