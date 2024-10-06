@@ -22,7 +22,7 @@ public class Traveler extends User implements Serializable {
 
 	@XmlIDREF
 	@OneToMany(mappedBy = "traveler", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	private List<Booking> bookedRides = new LinkedList<Booking>();
+	private List<Booking> bookedRides = new LinkedList<>();
 
 	@XmlIDREF
 	@OneToMany(mappedBy = "traveler", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
