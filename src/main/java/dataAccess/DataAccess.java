@@ -338,6 +338,7 @@ public class DataAccess {
 	}
 
 	public User getUser(String erab) {
+		
 		return db.find(User.class, erab);
 	}
 
@@ -472,7 +473,6 @@ public class DataAccess {
 				if (deposit) {
 					user.setMoney(currentMoney + amount);
 				} else {
- 
 					if ((currentMoney - amount) < 0) {
 						user.setMoney(0);
 					}else {

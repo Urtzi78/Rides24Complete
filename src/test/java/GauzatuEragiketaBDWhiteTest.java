@@ -120,7 +120,7 @@ public class GauzatuEragiketaBDWhiteTest {
 		public void test5() {
 			String username="Asier";
 			String password="454";
-			Double money=6.7;
+			Double money=26.7;
 			try {
 				Double amount=5.9;
 				boolean deposit=false;

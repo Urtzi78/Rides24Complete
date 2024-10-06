@@ -1,6 +1,7 @@
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.when;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -50,25 +51,25 @@ static DataAccess sut;
     }
 	User user;
 	@Test
+	//sut.GauzatuEragiketa. username==null
 	public void test1() {
 		try{
 			String username=null;
 			Double amount=5.9;
-		    
-			Mockito.when(db.find(User.class, username)).thenThrow(new Exception());
 			
+			when(db.find(User.class, null)).thenThrow(new IllegalArgumentException("Cannot find user with null username"));
+		 
 			sut.open();
 			boolean emaitza=sut.gauzatuEragiketa(username, amount, true);
 			
 			assertFalse(emaitza);
 			
 		} catch(Exception e) {
-			System.out.print("exception atera da");
 			fail();
 		} finally {
 			sut.close();
 		}
-	}
+	} 
 	
 	@Test
 	//sut.GauzatuEragiketa. user ez dago datu basean

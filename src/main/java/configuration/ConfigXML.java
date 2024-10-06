@@ -17,7 +17,6 @@ import org.w3c.dom.NodeList;
  */
 public class ConfigXML {
 	
-	private static ConfigXML instance;
 	
 	Logger logger = Logger.getLogger(ConfigXML.class.getName());
 	
@@ -137,16 +136,7 @@ public class ConfigXML {
 		
 	}
 	
-	 public static ConfigXML getInstance() {
-	        if (instance == null) {
-	            synchronized (ConfigXML.class) {
-	                if (instance == null) {
-	                    instance = new ConfigXML();
-	                }
-	            }
-	        }
-	        return instance;
-	 }
+	 
 
 	private static String getTagValue(String sTag, Element eElement)
 	 {
@@ -157,9 +147,9 @@ public class ConfigXML {
 
 	 }
 	
-	/*public static ConfigXML getInstance() {
+	public static ConfigXML getInstance() {
 		return theInstance;
-	}*/
+	}
 
 	public String getBusinessLogicNode() {
 		return businessLogicNode;
