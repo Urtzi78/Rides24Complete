@@ -49,7 +49,6 @@ public class CreateRideBDWhiteTest {
 				try {
 					rideDate = sdf.parse("05/10/2026");
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}	
 				
@@ -64,14 +63,11 @@ public class CreateRideBDWhiteTest {
 				
 				
 			   } catch (RideAlreadyExistException e) {
-				// TODO Auto-generated catch block
 				// if the program goes to this point fail  
 				fail();
 				} catch (RideMustBeLaterThanTodayException e) {
-				// TODO Auto-generated catch block
 					fail();
 				} catch (Exception e) {
-				// TODO Auto-generated catch block
 					fail();
 					
 				} finally {
@@ -93,7 +89,6 @@ public class CreateRideBDWhiteTest {
 		try {
 			rideDate = sdf.parse("05/10/2026");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		try {
@@ -113,7 +108,6 @@ public class CreateRideBDWhiteTest {
 				sut.close();
 				fail();
 			} catch (RideMustBeLaterThanTodayException e) {
-			// TODO Auto-generated catch block
 			sut.close();
 			fail();
 		} 
@@ -137,7 +131,6 @@ public class CreateRideBDWhiteTest {
 		try {
 			rideDate = sdf.parse("05/10/2018");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		try {
@@ -190,7 +183,6 @@ public class CreateRideBDWhiteTest {
 		try {
 			rideDate = sdf.parse("05/10/2026");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		
@@ -248,7 +240,6 @@ public class CreateRideBDWhiteTest {
 		try {
 			rideDate = sdf.parse("05/10/2026");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		Ride ride=null;
@@ -275,15 +266,11 @@ public class CreateRideBDWhiteTest {
 			testDA.close();
 			
 		   } catch (RideAlreadyExistException e) {
-			// TODO Auto-generated catch block
 			// if the program goes to this point fail  
 			fail();
 			} catch (RideMustBeLaterThanTodayException e) {
-
-			// TODO Auto-generated catch block
 			fail();
 			}  catch (Exception e) {
-			// TODO Auto-generated catch block
 			fail();
 			}    
 		
