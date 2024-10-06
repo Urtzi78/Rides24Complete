@@ -1,9 +1,6 @@
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -14,8 +11,6 @@ import domain.Booking;
 import domain.Driver;
 import domain.Ride;
 import domain.Traveler;
-import exceptions.RideAlreadyExistException;
-import exceptions.RideMustBeLaterThanTodayException;
 import testOperations.TestDataAccess;
 
 public class CancelRideBDBlackTest {

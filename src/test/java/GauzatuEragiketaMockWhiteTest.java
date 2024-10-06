@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 
 import org.junit.After;
 import org.junit.Before;
@@ -18,7 +17,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import dataAccess.DataAccess;
-import domain.Driver;
 import domain.User;
 
 public class GauzatuEragiketaMockWhiteTest {
@@ -49,7 +47,7 @@ static DataAccess sut;
     public  void tearDown() {
 		persistenceMock.close();
     }
-	User user;
+
 	@Test
 	//sut.GauzatuEragiketa. username==null
 	public void test1() {
@@ -100,7 +98,7 @@ static DataAccess sut;
 			String password="123";
 			Double money=5.9;
 			Double amount=20.0;
-			user=new User(username, password, null);
+			User user=new User(username, password, null);
 			user.setMoney(money);
 			Mockito.when(db.find(User.class, user.getUsername())).thenReturn(user);
 			//Mockito.when(db.createQuery("SELECT u FROM User u WHERE u.username = :"+username, User.class)).thenReturn(query);

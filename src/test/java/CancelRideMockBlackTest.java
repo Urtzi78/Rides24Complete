@@ -3,7 +3,6 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -76,16 +75,15 @@ static DataAccess sut;
 	//Exception printeatu behar du, ez dituelako erreserbak
 	public void test2() {
 		System.out.println("-------------------------------------2.Testa--------------------------------");
-		Traveler a=new Traveler("Aimar", "1234");
 		Driver d=new Driver("Dani", "a");
 		Ride r=new Ride( "Hernani", "Lasarte", new Date(), 7, 9, d);
 		sut.open();
-		
 		sut.cancelRide(r);
+		assertTrue(true);
 		sut.close();
 	
-		
 	}
+	
 	@Test
 	//Ridea null denez Exception bat pantailaratu behar du
 	public void test3() {

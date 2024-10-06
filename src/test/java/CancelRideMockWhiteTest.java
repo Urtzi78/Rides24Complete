@@ -2,7 +2,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -67,7 +66,6 @@ static DataAccess sut;
 	public void test2() {
 		System.out.println("-------------------------------------2.Testa--------------------------------");
 		sut.open();
-		Traveler a=new Traveler("Aimar", "1234");
 		Driver d=new Driver("Dani", "a");
 		Ride r=new Ride( "Hernani", "Lasarte", new Date(), 7, 9, d);
 		r.setBookings(new ArrayList<Booking>());

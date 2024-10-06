@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +26,7 @@ public class Driver extends User implements Serializable {
 	private List<Car> cars = new LinkedList<>();
 	@XmlIDREF
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Ride> createdRides = new LinkedList<Ride>();
+	private List<Ride> createdRides = new LinkedList<>();
 
 	public Driver(String username, String passwd) {
 		super(username, passwd, "Driver");

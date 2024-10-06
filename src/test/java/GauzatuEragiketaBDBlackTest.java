@@ -5,7 +5,6 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import dataAccess.DataAccess;
-import domain.Driver;
 import domain.User;
 import testOperations.TestDataAccess;
 

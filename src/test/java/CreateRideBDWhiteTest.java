@@ -1,4 +1,3 @@
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -196,7 +195,7 @@ public class CreateRideBDWhiteTest {
 			
 			//invoke System Under Test (sut)  
 			sut.open();
-			Ride ride=sut.createRide(rideFrom, rideTo, rideDate, 2, 10, driverUsername);
+			sut.createRide(rideFrom, rideTo, rideDate, 2, 10, driverUsername);
 			
 			//if the program goes to this point fail
 			fail();
@@ -247,7 +246,8 @@ public class CreateRideBDWhiteTest {
 		testDA.open();
 		
 			testDA.createDriver(driverUsername,null);
-		
+			driverCreated=true;
+			
 		testDA.close();
 		try {
 			//invoke System Under Test (sut)  
@@ -278,6 +278,7 @@ public class CreateRideBDWhiteTest {
 		finally {   
 
 			testDA.open();
+			if(driverCreated)
 				testDA.removeDriver(driverUsername);
 			testDA.close();
 			

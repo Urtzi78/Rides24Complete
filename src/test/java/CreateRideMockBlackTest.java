@@ -383,7 +383,7 @@ public class CreateRideMockBlackTest {
 		}	
 		try {
 			
-			Driver driver1=new Driver(driverUsername,"123");
+			Driver driver1=new Driver(driverUsername, driverPassword);
 
 			//configure the state through mocks 
 	        Mockito.when(db.find(Driver.class, driver1.getUsername())).thenReturn(driver1);	
