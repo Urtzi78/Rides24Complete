@@ -1,6 +1,7 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -21,7 +22,7 @@ public class Traveler extends User implements Serializable {
 
 	@XmlIDREF
 	@OneToMany(mappedBy = "traveler", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	private List<Booking> bookedRides = new Vector<Booking>();
+	private List<Booking> bookedRides = new LinkedList<Booking>();
 
 	@XmlIDREF
 	@OneToMany(mappedBy = "traveler", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
