@@ -137,7 +137,7 @@ public class BookRideMockBlackTest {
 		Mockito.when(db.createQuery("SELECT r FROM Ride r WHERE r.id = :rideId", Ride.class))
 				.thenReturn(typedQueryRide);
 		Mockito.when(typedQueryRide.setParameter("rideId", 1L)).thenReturn(typedQueryRide);
-		Mockito.when(typedQueryRide.getResultList()).thenReturn(Collections.emptyList()); // Ride no encontrado
+		Mockito.when(typedQueryRide.getResultList()).thenReturn(Collections.emptyList());
 
 		Ride ride = new Ride("Donostia", "Bilbo", new Date(), 5, 50, new Driver("TestDriver", "password"));
 		sut.open();
@@ -181,8 +181,8 @@ public class BookRideMockBlackTest {
 		Mockito.when(typedQueryTraveler.getResultList()).thenReturn(Collections.singletonList(traveler));
 
 		sut.open();
-		boolean resultZeroSeats = sut.bookRide(username, ride, 0, 50.0); // Seats es 0
-		boolean resultNegativeSeats = sut.bookRide(username, ride, -2, 50.0); // Seats es menor a 0
+		boolean resultZeroSeats = sut.bookRide(username, ride, 0, 50.0);
+		boolean resultNegativeSeats = sut.bookRide(username, ride, -2, 50.0);
 		sut.close();
 
 		assertFalse(resultZeroSeats);
@@ -215,7 +215,7 @@ public class BookRideMockBlackTest {
 	public void test8() {
 		String username = "TestTraveler";
 		Driver driver = new Driver("TestDriver", "password");
-		Ride ride = new Ride("Donostia", "Bilbo", new Date(), 5, 50, driver); // Precio por plaza es 50
+		Ride ride = new Ride("Donostia", "Bilbo", new Date(), 5, 50, driver);
 		Traveler traveler = new Traveler(username, "password");
 		traveler.setMoney(1000.0);
 
