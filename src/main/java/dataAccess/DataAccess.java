@@ -24,8 +24,9 @@ import exceptions.RideMustBeLaterThanTodayException;
  * It implements the data access to the objectDb database
  */
 public class DataAccess {
-	private final static String  accepted="Accepted";
-	private final static String  username="username";
+	private static final String ACCEPTED = "Accepted";
+	private static final String USERNAME = "username";
+	private static final String BOOK_FREEZE = "BookFreeze";
 	private EntityManager db;
 	private EntityManagerFactory emf;
 
@@ -125,11 +126,11 @@ public class DataAccess {
 			Booking book3 = new Booking(ride2, traveler2, 2);
 			Booking book5 = new Booking(ride5, traveler1, 1);
 
-			book1.setStatus(accepted);
+			book1.setStatus(ACCEPTED);
 			book2.setStatus("Rejected");
-			book3.setStatus(accepted);
-			book4.setStatus(accepted);
-			book5.setStatus(accepted);
+			book3.setStatus(ACCEPTED);
+			book4.setStatus(ACCEPTED);
+			book5.setStatus(ACCEPTED);
 
 			db.persist(book1);
 			db.persist(book2);
@@ -137,11 +138,11 @@ public class DataAccess {
 			db.persist(book4);
 			db.persist(book5);
 
-			Movement m1 = new Movement(traveler1, "BookFreeze", 20);
-			Movement m2 = new Movement(traveler1, "BookFreeze", 40);
-			Movement m3 = new Movement(traveler1, "BookFreeze", 5);
-			Movement m4 = new Movement(traveler2, "BookFreeze", 4);
-			Movement m5 = new Movement(traveler1, "BookFreeze", 3);
+			Movement m1 = new Movement(traveler1, BOOK_FREEZE, 20);
+			Movement m2 = new Movement(traveler1, BOOK_FREEZE, 40);
+			Movement m3 = new Movement(traveler1, BOOK_FREEZE, 5);
+			Movement m4 = new Movement(traveler2, BOOK_FREEZE, 4);
+			Movement m5 = new Movement(traveler1, BOOK_FREEZE, 3);
 			Movement m6 = new Movement(driver1, "Deposit", 15);
 			Movement m7 = new Movement(traveler1, "Deposit", 168);
 
@@ -212,8 +213,9 @@ public class DataAccess {
 
 	/**
 	 * This method creates a ride for a driver
+	 * 
 	 * @param parameterObject
-	 * @param driverEmail to which ride is added
+	 * @param driverEmail     to which ride is added
 	 * 
 	 * @return the created ride, or null, or an exception
 	 * @throws RideMustBeLaterThanTodayException if the ride date is before today
@@ -222,13 +224,15 @@ public class DataAccess {
 	 */
 	public Ride createRide(CreateRideParameter parameterObject)
 			throws RideAlreadyExistException, RideMustBeLaterThanTodayException {
-		System.out.println(">> DataAccess: createRide=> from= " + parameterObject.from + " to= " + parameterObject.to + " driver=" + parameterObject.driverName + " date " + parameterObject.date);
+		System.out.println(">> DataAccess: createRide=> from= " + parameterObject.from + " to= " + parameterObject.to
+				+ " driver=" + parameterObject.driverName + " date " + parameterObject.date);
 		if (parameterObject.driverName == null)
 			return null;
 		try {
 			dataKonparatu(parameterObject.date);
 
-			Ride ride = rideGorde(parameterObject.from, parameterObject.to, parameterObject.date, parameterObject.nPlaces, parameterObject.price, parameterObject.driverName);
+			Ride ride = rideGorde(parameterObject.from, parameterObject.to, parameterObject.date,
+					parameterObject.nPlaces, parameterObject.price, parameterObject.driverName);
 
 			return ride;
 		} catch (NullPointerException e) {
@@ -242,7 +246,8 @@ public class DataAccess {
 	private void dataKonparatu(Date date) throws RideMustBeLaterThanTodayException {
 		if (new Date().compareTo(date) > 0) {
 			System.out.println("ppppp");
-			throw new RideMustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
+			throw new RideMustBeLaterThanTodayException(
+					ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
 		}
 	}
 
@@ -252,7 +257,8 @@ public class DataAccess {
 		Driver driver = db.find(Driver.class, driverName);
 		if (driver.doesRideExists(from, to, date)) {
 			db.getTransaction().commit();
-			throw new RideAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
+			throw new RideAlreadyExistException(
+					ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
 		}
 		Ride ride = driver.addRide(from, to, date, nPlaces, price);
 		db.persist(driver);
@@ -340,14 +346,14 @@ public class DataAccess {
 	}
 
 	public User getUser(String erab) {
-		
+
 		return db.find(User.class, erab);
 	}
 
 	public double getActualMoney(String erab) {
 		TypedQuery<Double> query = db.createQuery("SELECT u.money FROM User u WHERE u.username = :username",
 				Double.class);
-		query.setParameter(username, erab);
+		query.setParameter(USERNAME, erab);
 		Double money = query.getSingleResult();
 		if (money != null) {
 			return money;
@@ -359,13 +365,13 @@ public class DataAccess {
 	public boolean isRegistered(String erab, String passwd) {
 		TypedQuery<Long> travelerQuery = db.createQuery(
 				"SELECT COUNT(t) FROM Traveler t WHERE t.username = :username AND t.passwd = :passwd", Long.class);
-		travelerQuery.setParameter(username, erab);
+		travelerQuery.setParameter(USERNAME, erab);
 		travelerQuery.setParameter("passwd", passwd);
 		Long travelerCount = travelerQuery.getSingleResult();
 
 		TypedQuery<Long> driverQuery = db.createQuery(
 				"SELECT COUNT(d) FROM Driver d WHERE d.username = :username AND d.passwd = :passwd", Long.class);
-		driverQuery.setParameter(username, erab);
+		driverQuery.setParameter(USERNAME, erab);
 		driverQuery.setParameter("passwd", passwd);
 		Long driverCount = driverQuery.getSingleResult();
 
@@ -375,7 +381,7 @@ public class DataAccess {
 
 	public Driver getDriver(String erab) {
 		TypedQuery<Driver> query = db.createQuery("SELECT d FROM Driver d WHERE d.username = :username", Driver.class);
-		query.setParameter(username, erab);
+		query.setParameter(USERNAME, erab);
 		List<Driver> resultList = query.getResultList();
 		if (resultList.isEmpty()) {
 			return null;
@@ -387,7 +393,7 @@ public class DataAccess {
 	public Traveler getTraveler(String erab) {
 		TypedQuery<Traveler> query = db.createQuery("SELECT t FROM Traveler t WHERE t.username = :username",
 				Traveler.class);
-		query.setParameter(username, erab);
+		query.setParameter(USERNAME, erab);
 		List<Traveler> resultList = query.getResultList();
 		if (resultList.isEmpty()) {
 			return null;
@@ -399,12 +405,12 @@ public class DataAccess {
 	public String getMotabyUsername(String erab) {
 		TypedQuery<String> driverQuery = db.createQuery("SELECT d.mota FROM Driver d WHERE d.username = :username",
 				String.class);
-		driverQuery.setParameter(username, erab);
+		driverQuery.setParameter(USERNAME, erab);
 		List<String> driverResultList = driverQuery.getResultList();
 
 		TypedQuery<String> travelerQuery = db.createQuery("SELECT t.mota FROM Traveler t WHERE t.username = :username",
 				String.class);
-		travelerQuery.setParameter(username, erab);
+		travelerQuery.setParameter(USERNAME, erab);
 		List<String> travelerResultList = travelerQuery.getResultList();
 
 		if (!driverResultList.isEmpty()) {
@@ -467,20 +473,10 @@ public class DataAccess {
 	 */
 	public boolean gauzatuEragiketa(String username, double amount, boolean deposit) {
 		try {
-			amount++;
 			db.getTransaction().begin();
 			User user = getUser(username);
-			if (user != null   && amount>=0) { //amount negatiboa ez izatea
-				double currentMoney = user.getMoney();
-				if (deposit) {
-					user.setMoney(currentMoney + amount);
-				} else {
-					if ((currentMoney - amount) < 0) {
-						user.setMoney(0);
-					}else {
-						user.setMoney(currentMoney - amount);
-					}
-				}
+			if (user != null && amount >= 0) { // amount negatiboa ez izatea
+				user = aldatuDirua(amount, deposit, user);
 				db.merge(user);
 				db.getTransaction().commit();
 				return true;
@@ -488,10 +484,23 @@ public class DataAccess {
 			db.getTransaction().commit();
 			return false;
 		} catch (Exception e) {
-			//e.printStackTrace();
 			db.getTransaction().rollback();
 			return false;
 		}
+	}
+
+	private User aldatuDirua(double amount, boolean deposit, User user) {
+		double currentMoney = user.getMoney();
+		if (deposit) {
+			user.setMoney(currentMoney + amount);
+		} else {
+			if ((currentMoney - amount) < 0) {
+				user.setMoney(0);
+			} else {
+				user.setMoney(currentMoney - amount);
+			}
+		}
+		return user;
 	}
 
 	public void addMovement(User user, String eragiketa, double amount) {
@@ -654,31 +663,31 @@ public class DataAccess {
 	public void cancelRide(Ride ride) {
 		try {
 			db.getTransaction().begin();
-			if(ride.getBookings()!=null)
-			for (Booking booking : ride.getBookings()) {
-				if (booking.getStatus().equals(accepted) || booking.getStatus().equals("NotDefined")) {
-					double price = booking.prezioaKalkulatu();
-					Traveler traveler = booking.getTraveler();
-					double frozenMoney = traveler.getIzoztatutakoDirua();
-					traveler.setIzoztatutakoDirua(frozenMoney - price);
+			if (ride.getBookings() != null)
+				for (Booking booking : ride.getBookings()) {
+					if (booking.getStatus().equals(ACCEPTED) || booking.getStatus().equals("NotDefined")) {
+						double price = booking.prezioaKalkulatu();
+						Traveler traveler = booking.getTraveler();
+						double frozenMoney = traveler.getIzoztatutakoDirua();
+						traveler.setIzoztatutakoDirua(frozenMoney - price);
 
-					double money = traveler.getMoney();
-					traveler.setMoney(money + price);
-					db.merge(traveler);
-					db.getTransaction().commit();
-					addMovement(traveler, "BookDeny", price);
-					db.getTransaction().begin();
+						double money = traveler.getMoney();
+						traveler.setMoney(money + price);
+						db.merge(traveler);
+						db.getTransaction().commit();
+						addMovement(traveler, "BookDeny", price);
+						db.getTransaction().begin();
+					}
+					booking.setStatus("Rejected");
+					db.merge(booking);
 				}
-				booking.setStatus("Rejected");
-				db.merge(booking);
-			}
 			ride.setActive(false);
 			db.merge(ride);
 			db.getTransaction().commit();
 		} catch (Exception e) {
-		
-				db.getTransaction().rollback();
-			
+
+			db.getTransaction().rollback();
+
 			e.printStackTrace();
 		}
 	}
@@ -699,7 +708,7 @@ public class DataAccess {
 					activeRides.add(ride);
 				}
 			}
-			
+
 			db.getTransaction().commit();
 			return activeRides;
 		} catch (Exception e) {
@@ -737,12 +746,12 @@ public class DataAccess {
 		return era;
 	}
 
-	public boolean erreklamazioaBidali(String nor, String nori, Date gaur, Booking booking, String textua,
-			boolean aurk) {
+	public boolean erreklamazioaBidali(ErreklamazioaBidaliParameter parameterObject) {
 		try {
 			db.getTransaction().begin();
 
-			Complaint erreklamazioa = new Complaint(nor, nori, gaur, booking, textua, aurk);
+			Complaint erreklamazioa = new Complaint(parameterObject.nor, parameterObject.nori, parameterObject.gaur,
+					parameterObject.booking, parameterObject.textua, parameterObject.aurk);
 			db.persist(erreklamazioa);
 			db.getTransaction().commit();
 			return true;
