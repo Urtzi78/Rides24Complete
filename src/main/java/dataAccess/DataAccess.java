@@ -24,6 +24,7 @@ import exceptions.RideMustBeLaterThanTodayException;
  * It implements the data access to the objectDb database
  */
 public class DataAccess {
+	private final static String  accepted="Accepted";
 	private EntityManager db;
 	private EntityManagerFactory emf;
 
@@ -123,11 +124,11 @@ public class DataAccess {
 			Booking book3 = new Booking(ride2, traveler2, 2);
 			Booking book5 = new Booking(ride5, traveler1, 1);
 
-			book1.setStatus("Accepted");
+			book1.setStatus(accepted);
 			book2.setStatus("Rejected");
-			book3.setStatus("Accepted");
-			book4.setStatus("Accepted");
-			book5.setStatus("Accepted");
+			book3.setStatus(accepted);
+			book4.setStatus(accepted);
+			book5.setStatus(accepted);
 
 			db.persist(book1);
 			db.persist(book2);
@@ -210,11 +211,7 @@ public class DataAccess {
 
 	/**
 	 * This method creates a ride for a driver
-	 * 
-	 * @param from        the origin location of a ride
-	 * @param to          the destination location of a ride
-	 * @param date        the date of the ride
-	 * @param nPlaces     available seats
+	 * @param parameterObject
 	 * @param driverEmail to which ride is added
 	 * 
 	 * @return the created ride, or null, or an exception
@@ -222,30 +219,15 @@ public class DataAccess {
 	 * @throws RideAlreadyExistException         if the same ride already exists for
 	 *                                           the driver
 	 */
-	public Ride createRide(String from, String to, Date date, int nPlaces, float price, String driverName)
+	public Ride createRide(CreateRideParameter parameterObject)
 			throws RideAlreadyExistException, RideMustBeLaterThanTodayException {
-		System.out.println(
-				">> DataAccess: createRide=> from= " + from + " to= " + to + " driver=" + driverName + " date " + date);
-		if (driverName == null)
+		System.out.println(">> DataAccess: createRide=> from= " + parameterObject.from + " to= " + parameterObject.to + " driver=" + parameterObject.driverName + " date " + parameterObject.date);
+		if (parameterObject.driverName == null)
 			return null;
 		try {
-			if (new Date().compareTo(date) > 0) {
-				System.out.println("ppppp");
-				throw new RideMustBeLaterThanTodayException(
-						ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
-			}
+			dataKonparatu(parameterObject.date);
 
-			db.getTransaction().begin();
-			Driver driver = db.find(Driver.class, driverName);
-			if (driver.doesRideExists(from, to, date)) {
-				db.getTransaction().commit();
-				throw new RideAlreadyExistException(
-						ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
-			}
-			Ride ride = driver.addRide(from, to, date, nPlaces, price);
-			// next instruction can be obviated
-			db.persist(driver);
-			db.getTransaction().commit();
+			Ride ride = rideGorde(parameterObject.from, parameterObject.to, parameterObject.date, parameterObject.nPlaces, parameterObject.price, parameterObject.driverName);
 
 			return ride;
 		} catch (NullPointerException e) {
@@ -254,6 +236,27 @@ public class DataAccess {
 			return null;
 		}
 
+	}
+
+	private void dataKonparatu(Date date) throws RideMustBeLaterThanTodayException {
+		if (new Date().compareTo(date) > 0) {
+			System.out.println("ppppp");
+			throw new RideMustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
+		}
+	}
+
+	private Ride rideGorde(String from, String to, Date date, int nPlaces, float price, String driverName)
+			throws RideAlreadyExistException {
+		db.getTransaction().begin();
+		Driver driver = db.find(Driver.class, driverName);
+		if (driver.doesRideExists(from, to, date)) {
+			db.getTransaction().commit();
+			throw new RideAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
+		}
+		Ride ride = driver.addRide(from, to, date, nPlaces, price);
+		db.persist(driver);
+		db.getTransaction().commit();
+		return ride;
 	}
 
 	/**
@@ -652,7 +655,7 @@ public class DataAccess {
 			db.getTransaction().begin();
 			if(ride.getBookings()!=null)
 			for (Booking booking : ride.getBookings()) {
-				if (booking.getStatus().equals("Accepted") || booking.getStatus().equals("NotDefined")) {
+				if (booking.getStatus().equals(accepted) || booking.getStatus().equals("NotDefined")) {
 					double price = booking.prezioaKalkulatu();
 					Traveler traveler = booking.getTraveler();
 					double frozenMoney = traveler.getIzoztatutakoDirua();

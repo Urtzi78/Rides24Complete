@@ -22,6 +22,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import dataAccess.CreateRideParameter;
 import dataAccess.DataAccess;
 import domain.Discount;
 import domain.Driver;
@@ -81,7 +82,7 @@ public class CreateRideMockTest {
 			// Mockito.doReturn(driver).when (db).find (Driver.class, driverUsername);
 			// invoke System Under Test (sut)
 			sut.open();
-			sut.createRide(rideFrom, rideTo, rideDate, 0, 0, driverUsername);
+			sut.createRide(new CreateRideParameter(rideFrom, rideTo, rideDate, 0, 0, driverUsername));
 			sut.close();
 			fail();
 		} catch (RideAlreadyExistException e) {
@@ -116,7 +117,7 @@ public class CreateRideMockTest {
 			// Mockito.doReturn(driver).when (db).find (Driver.class, driverUsername);
 			// invoke System Under Test (sut)
 			sut.open();
-			sut.createRide(rideFrom, rideTo, rideDate, 0, 0, driverUsername);
+			sut.createRide(new CreateRideParameter(rideFrom, rideTo, rideDate, 0, 0, driverUsername));
 			sut.close();
 			assertTrue(true);
 		} catch (RideAlreadyExistException e) {

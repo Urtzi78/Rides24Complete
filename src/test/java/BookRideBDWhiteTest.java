@@ -8,6 +8,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import dataAccess.CreateRideParameter;
 import dataAccess.DataAccess;
 import domain.Ride;
 import testOperations.TestDataAccess;
@@ -70,7 +71,7 @@ public class BookRideBDWhiteTest {
 			Date rideDate = sdf.parse("30/11/2024");
 
 			sut.open();
-			ride = sut.createRide("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername());
+			ride = sut.createRide(new CreateRideParameter("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername()));
 
 			// ride erreserbatzen saiatu existitzen ez den erabiltzaile izenarekin
 			boolean emaitza = sut.bookRide(nonExistentUsername, ride, 2, 0);
@@ -111,7 +112,7 @@ public class BookRideBDWhiteTest {
 			Date rideDate = sdf.parse("30/11/2024");
 
 			sut.open();
-			ride = sut.createRide("Donostia", "Bilbo", rideDate, 3, 50, driver.getUsername());
+			ride = sut.createRide(new CreateRideParameter("Donostia", "Bilbo", rideDate, 3, 50, driver.getUsername()));
 
 			// Daitezkeenak baina gehiago erreserbatzen saiatzen da
 			boolean result = sut.bookRide(username, ride, 4, 0);
@@ -154,7 +155,7 @@ public class BookRideBDWhiteTest {
 			Date rideDate = sdf.parse("30/11/2024");
 
 			sut.open();
-			ride = sut.createRide("Donostia", "Bilbao", rideDate, 5, 100, driver.getUsername());
+			ride = sut.createRide(new CreateRideParameter("Donostia", "Bilbao", rideDate, 5, 100, driver.getUsername()));
 
 			// travelerrak ordaindu ezin duen ride bat erreserbatzen saiatu
 			boolean result = sut.bookRide(username, ride, 2, 0);
@@ -209,7 +210,7 @@ public class BookRideBDWhiteTest {
 			Date rideDate = sdf.parse("30/11/2024");
 
 			sut.open();
-			ride = sut.createRide("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername());
+			ride = sut.createRide(new CreateRideParameter("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername()));
 
 			// Bidaia erreserbatu
 			int seats = 2;

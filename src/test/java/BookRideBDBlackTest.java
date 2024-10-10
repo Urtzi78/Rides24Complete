@@ -3,6 +3,7 @@ import org.junit.Test;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import dataAccess.CreateRideParameter;
 import dataAccess.DataAccess;
 import domain.Ride;
 import domain.Driver;
@@ -38,7 +39,7 @@ public class BookRideBDBlackTest {
 			Date rideDate = sdf.parse("30/11/2024");
 
 			sut.open();
-			ride = sut.createRide("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername());
+			ride = sut.createRide(new CreateRideParameter("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername()));
 			boolean result = sut.bookRide(username, ride, 2, 5.0);
 			assertTrue(result);
 
@@ -79,7 +80,7 @@ public class BookRideBDBlackTest {
 			Date rideDate = sdf.parse("30/11/2024");
 
 			sut.open();
-			ride = sut.createRide("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername());
+			ride = sut.createRide(new CreateRideParameter("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername()));
 			boolean result = sut.bookRide(username, ride, 2, 0);
 			assertFalse(result);
 		} catch (Exception e) {
@@ -112,7 +113,7 @@ public class BookRideBDBlackTest {
 			Date rideDate = sdf.parse("30/11/2024");
 
 			sut.open();
-			ride = sut.createRide("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername());
+			ride = sut.createRide(new CreateRideParameter("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername()));
 			boolean result = sut.bookRide(null, ride, 2, 0);
 			assertFalse(result);
 		} catch (Exception e) {
@@ -213,7 +214,7 @@ public class BookRideBDBlackTest {
 			Date rideDate = sdf.parse("30/11/2024");
 
 			sut.open();
-			ride = sut.createRide("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername());
+			ride = sut.createRide(new CreateRideParameter("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername()));
 			boolean result = sut.bookRide(username, ride, 0, 0);
 			assertFalse(result);
 
@@ -255,7 +256,7 @@ public class BookRideBDBlackTest {
 			Date rideDate = sdf.parse("30/11/2024");
 
 			sut.open();
-			ride = sut.createRide("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername());
+			ride = sut.createRide(new CreateRideParameter("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername()));
 			boolean result = sut.bookRide(username, ride, 2, -10);
 			assertFalse(result);
 		} catch (Exception e) {
@@ -294,7 +295,7 @@ public class BookRideBDBlackTest {
 			Date rideDate = sdf.parse("30/11/2024");
 
 			sut.open();
-			ride = sut.createRide("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername());
+			ride = sut.createRide(new CreateRideParameter("Donostia", "Bilbo", rideDate, 5, 50, driver.getUsername()));
 			boolean result = sut.bookRide(username, ride, 2, 100);
 			assertFalse(result);
 		} catch (Exception e) {
