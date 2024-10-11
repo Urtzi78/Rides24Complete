@@ -23,6 +23,7 @@ import org.mockito.MockitoAnnotations;
 
 import dataAccess.CreateRideParameter;
 import dataAccess.DataAccess;
+import domain.AddRideParameter;
 import domain.Driver;
 import domain.Ride;
 import exceptions.RideAlreadyExistException;
@@ -472,7 +473,7 @@ public class CreateRideMockBlackTest {
 		try {
 					
 			 driver=new Driver(driverUsername,driverPassword);
-			 driver.addRide(rideFrom, rideTo, rideDate, 2, 10);
+			 driver.addRide(new AddRideParameter(rideFrom, rideTo, rideDate, 2, 10));
 			//configure the state through mocks 
 	        Mockito.when(db.find(Driver.class, driver.getUsername())).thenReturn(driver);
 		

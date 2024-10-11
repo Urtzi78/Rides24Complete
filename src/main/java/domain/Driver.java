@@ -57,13 +57,14 @@ public class Driver extends User implements Serializable {
 	/**
 	 * This method creates a bet with a question, minimum bet ammount and percentual
 	 * profit
-	 * 
+	 * @param parameterObject TODO
 	 * @param question   to be added to the event
 	 * @param betMinimum of that question
+	 * 
 	 * @return Bet
 	 */
-	public Ride addRide(String from, String to, Date date, int nPlaces, float price) {
-		Ride ride = new Ride(from, to, date, nPlaces, price, this);
+	public Ride addRide(AddRideParameter parameterObject) {
+		Ride ride = new Ride(parameterObject.from, parameterObject.to, parameterObject.date, parameterObject.nPlaces, parameterObject.price, this);
 		createdRides.add(ride);
 		return ride;
 	}

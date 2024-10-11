@@ -108,11 +108,11 @@ public class DataAccess {
 			cal.set(2024, Calendar.APRIL, 20);
 			Date date4 = UtilDate.trim(cal.getTime());
 
-			driver1.addRide("Donostia", "Madrid", date2, 5, 20); // ride1
-			driver1.addRide("Irun", "Donostia", date2, 5, 2); // ride2
-			driver1.addRide("Madrid", "Donostia", date3, 5, 5); // ride3
-			driver1.addRide("Barcelona", "Madrid", date4, 0, 10); // ride4
-			driver2.addRide("Donostia", "Hondarribi", date1, 5, 3); // ride5
+			driver1.addRide(new AddRideParameter("Donostia", "Madrid", date2, 5, 20)); // ride1
+			driver1.addRide(new AddRideParameter("Irun", "Donostia", date2, 5, 2)); // ride2
+			driver1.addRide(new AddRideParameter("Madrid", "Donostia", date3, 5, 5)); // ride3
+			driver1.addRide(new AddRideParameter("Barcelona", "Madrid", date4, 0, 10)); // ride4
+			driver2.addRide(new AddRideParameter("Donostia", "Hondarribi", date1, 5, 3)); // ride5
 
 			Ride ride1 = driver1.getCreatedRides().get(0);
 			Ride ride2 = driver1.getCreatedRides().get(1);
@@ -260,7 +260,7 @@ public class DataAccess {
 			throw new RideAlreadyExistException(
 					ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
 		}
-		Ride ride = driver.addRide(from, to, date, nPlaces, price);
+		Ride ride = driver.addRide(new AddRideParameter(from, to, date, nPlaces, price));
 		db.persist(driver);
 		db.getTransaction().commit();
 		return ride;

@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import configuration.ConfigXML;
+import domain.AddRideParameter;
 import domain.Booking;
 import domain.Driver;
 import domain.Ride;
@@ -99,7 +100,7 @@ public class TestDataAccess {
 				driver = new Driver(name, null);
 				db.persist(driver);
 			}
-			driver.addRide(from, to, date, nPlaces, price);
+			driver.addRide(new AddRideParameter(from, to, date, nPlaces, price));
 			db.getTransaction().commit();
 			System.out.println("Driver created " + driver);
 

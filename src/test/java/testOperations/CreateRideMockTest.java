@@ -24,6 +24,7 @@ import org.mockito.MockitoAnnotations;
 
 import dataAccess.CreateRideParameter;
 import dataAccess.DataAccess;
+import domain.AddRideParameter;
 import domain.Discount;
 import domain.Driver;
 import exceptions.RideAlreadyExistException;
@@ -75,7 +76,7 @@ public class CreateRideMockTest {
 		}
 		try {
 			Driver driver = new Driver(driverUsername, driverPassword);
-			driver.addRide(rideFrom, rideTo, rideDate, 2, 10);
+			driver.addRide(new AddRideParameter(rideFrom, rideTo, rideDate, 2, 10));
 			// configure the state through mocks
 			Mockito.when(db.find(Driver.class, driverUsername)).thenReturn(driver);
 			// equivalent to
