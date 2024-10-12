@@ -18,8 +18,7 @@ import configuration.UtilDate;
 import domain.Car;
 import domain.Driver;
 import domain.Ride;
-import exceptions.RideAlreadyExistException;
-import exceptions.RideMustBeLaterThanTodayException;
+
 
 public class CreateRideGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
