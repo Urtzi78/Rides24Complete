@@ -18,6 +18,7 @@ import domain.Driver;
 import domain.Complaint;
 import domain.Movement;
 import exceptions.RideMustBeLaterThanTodayException;
+import iterator.ExtendedIterator;
 import exceptions.RideAlreadyExistException;
 
 import javax.jws.WebMethod;
@@ -36,7 +37,13 @@ public interface BLFacade extends Serializable{
 	 */
 	@WebMethod
 	public List<String> getDepartCities();
-
+	/**
+	 * This method returns all the cities where rides depart
+	 * 
+	 * @return collection of cities
+	 */
+	@WebMethod
+	public	ExtendedIterator<String> getDepartingCitiesIterator();
 	/**
 	 * This method returns all the arrival destinations, from all rides that depart
 	 * from a given city

@@ -22,6 +22,7 @@ import domain.Driver;
 import domain.Complaint;
 import domain.Movement;
 import exceptions.RideMustBeLaterThanTodayException;
+import iterator.ExtendedIterator;
 import exceptions.RideAlreadyExistException;
 
 /**
@@ -65,7 +66,12 @@ public class BLFacadeImplementation implements BLFacade {
 		return departLocations;
 
 	}
-
+	
+	public	ExtendedIterator<String> getDepartingCitiesIterator(){
+		return null;
+		
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
