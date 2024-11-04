@@ -174,6 +174,8 @@ public class DataAccess {
 			Discount dis = new Discount("Uda24", 0.2, true);
 			db.persist(dis);
 
+			db.merge(driver1);
+			
 			db.getTransaction().commit();
 			System.out.println("Db initialized");
 
@@ -614,7 +616,7 @@ public class DataAccess {
 		TypedQuery<Booking> query = db.createQuery(
 				"SELECT b FROM Booking b WHERE b.traveler.username = :username AND b.ride.date <= CURRENT_DATE",
 				Booking.class);
-		query.setParameter(username, username);
+		query.setParameter(USERNAME, username);
 		return query.getResultList();
 	}
 
@@ -634,7 +636,7 @@ public class DataAccess {
 			db.getTransaction().begin();
 			TypedQuery<Driver> query = db.createQuery("SELECT d FROM Driver d WHERE d.username = :username",
 					Driver.class);
-			query.setParameter(username, username);
+			query.setParameter(USERNAME, username);
 			Driver driver = query.getSingleResult();
 
 			List<Ride> rides = driver.getCreatedRides();
@@ -697,7 +699,7 @@ public class DataAccess {
 			db.getTransaction().begin();
 			TypedQuery<Driver> query = db.createQuery("SELECT d FROM Driver d WHERE d.username = :username",
 					Driver.class);
-			query.setParameter(username, username);
+			query.setParameter(USERNAME, username);
 			Driver driver = query.getSingleResult();
 
 			List<Ride> rides = driver.getCreatedRides();
@@ -925,7 +927,7 @@ public class DataAccess {
 
 			TypedQuery<Alert> query = db.createQuery("SELECT a FROM Alert a WHERE a.traveler.username = :username",
 					Alert.class);
-			query.setParameter(username, username);
+			query.setParameter(USERNAME, username);
 			List<Alert> alerts = query.getResultList();
 
 			db.getTransaction().commit();
@@ -973,7 +975,7 @@ public class DataAccess {
 			boolean alertFound = false;
 			TypedQuery<Alert> alertQuery = db.createQuery("SELECT a FROM Alert a WHERE a.traveler.username = :username",
 					Alert.class);
-			alertQuery.setParameter(username, username);
+			alertQuery.setParameter(USERNAME, username);
 			List<Alert> alerts = alertQuery.getResultList();
 
 			TypedQuery<Ride> rideQuery = db
