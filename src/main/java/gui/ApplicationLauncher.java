@@ -1,17 +1,11 @@
 package gui;
 
 import java.util.logging.Logger;
-import java.net.URL;
 import java.util.Locale;
-
 import javax.swing.UIManager;
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
-
 import configuration.ConfigXML;
 import dataAccess.DataAccess;
 import businessLogic.BLFacade;
-import businessLogic.BLFacadeImplementation;
 import businessLogic.FacadeFactory;
 
 public class ApplicationLauncher {
