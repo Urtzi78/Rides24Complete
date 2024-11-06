@@ -6,7 +6,6 @@ import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
-import configuration.ConfigXML;
 import dataAccess.CreateRideParameter;
 import dataAccess.DataAccess;
 import dataAccess.ErreklamazioaBidaliParameter;
@@ -44,11 +43,7 @@ public class BLFacadeImplementation implements BLFacade {
 	}
 
 	public BLFacadeImplementation(DataAccess da) {
-
 		System.out.println("Creating BLFacadeImplementation instance with DataAccess parameter");
-		@SuppressWarnings("unused")
-		ConfigXML c = ConfigXML.getInstance();
-
 		dbManager = da;
 	}
 
