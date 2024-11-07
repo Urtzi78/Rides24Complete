@@ -21,6 +21,7 @@ import domain.Driver;
 import domain.Complaint;
 import domain.Movement;
 import exceptions.RideMustBeLaterThanTodayException;
+import iterator.CitiesIterator;
 import iterator.ExtendedIterator;
 import exceptions.RideAlreadyExistException;
 
@@ -65,8 +66,8 @@ public class BLFacadeImplementation implements BLFacade {
 	public	ExtendedIterator<String> getDepartingCitiesIterator(){
 		dbManager.open();
 
-		ExtendedIterator<String> iterator = dbManager.getDepartCitiesIterator();
-
+		List<String> cities= dbManager.getDepartCities();
+		CitiesIterator iterator=new CitiesIterator(cities);
 		dbManager.close();
 
 		return iterator;
