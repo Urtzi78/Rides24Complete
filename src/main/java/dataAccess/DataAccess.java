@@ -19,6 +19,8 @@ import configuration.UtilDate;
 import domain.*;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
+import iterator.CitiesIterator;
+import iterator.ExtendedIterator;
 
 /**
  * It implements the data access to the objectDb database
@@ -1058,6 +1060,13 @@ public class DataAccess {
 		} else {
 			return null;
 		}
+	}
+
+	public ExtendedIterator<String> getDepartCitiesIterator() {
+		TypedQuery<String> query = db.createQuery("SELECT DISTINCT r.from FROM Ride r ORDER BY r.from", String.class);
+		List<String> cities = query.getResultList();
+		CitiesIterator iterator=new CitiesIterator(cities);
+		return iterator;
 	}
 
 }

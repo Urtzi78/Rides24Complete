@@ -63,8 +63,13 @@ public class BLFacadeImplementation implements BLFacade {
 	}
 	
 	public	ExtendedIterator<String> getDepartingCitiesIterator(){
-		return null;
-		
+		dbManager.open();
+
+		ExtendedIterator<String> iterator = dbManager.getDepartCitiesIterator();
+
+		dbManager.close();
+
+		return iterator;
 	}
 	
 	/**
